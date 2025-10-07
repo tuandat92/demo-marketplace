@@ -30,6 +30,7 @@ public class ProductManagementUC implements ProductManagement {
 			.images(cmd.images())
 			.specifications(cmd.specifications())
 			.status(cmd.status())
+			.basePrice(cmd.basePrice())
 			.build();
 		productRepository.save(product);
 	}
@@ -59,7 +60,41 @@ public class ProductManagementUC implements ProductManagement {
 			.images(cmd.images())
 			.specifications(cmd.specifications())
 			.status(cmd.status())
+			.basePrice(cmd.basePrice())
 			.build();
 		productRepository.save(productSave);
+	}
+
+	@Override
+	public void updateBasePrice(ProductId id, Long basePrice) {
+		if (productRepository.findById(id).isEmpty()) {
+			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
+		}
+
+		productRepository.updateBasePrice(id, basePrice);
+	}
+
+	@Override
+	public void publishProduct(ProductId id) {
+		Optional<Product> productOptional = productRepository.findById(id);
+		if (productOptional.isEmpty()) {
+			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
+		}
+
+		Product product = productOptional.get();
+		if (!product.isValidPublish()) {
+			throw new ProductException(ErrorMessage.CANNOT_PUBLISH_PRODUCT);
+		}
+
+		productRepository.updateStatus(id, ProductStatus.PUBLISHED);
+	}
+
+	@Override
+	public void retireProduct(ProductId id) {
+		if (productRepository.findById(id).isEmpty()) {
+			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
+		}
+
+		productRepository.updateStatus(id, ProductStatus.RETIRED);
 	}
 }

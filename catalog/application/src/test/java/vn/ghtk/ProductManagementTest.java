@@ -39,7 +39,8 @@ class ProductManagementTest {
 				"• Khẳng định đẳng cấp với khung nhôm nguyên khối chắc chắn và diện mạo mới.",
 			List.of("https://cdn.tgdd.vn/Products/Images/42/342676/Slider/iphone-17-pro638949088567223883.jpg"),
 			"{\"cpu\": \"A20 Bionic\", \"ram\": \"12GB\"}",
-			ProductStatus.DRAFT
+			ProductStatus.DRAFT,
+			39990000L
 		);
 	}
 
@@ -97,6 +98,55 @@ class ProductManagementTest {
 				Mockito.when(productRepository.findByName(Mockito.any())).thenReturn(Optional.of(productExist));
 				Assertions.assertThrows(ProductException.class, () -> productManagementUC.updateProduct(new ProductId(UUID.randomUUID().toString()), productCreationCmd));
 			}
+		}
+	}
+
+	@Nested
+	class TestUpdateBasePrice {
+		@Test
+		void testUpdateProductFailProductExists() {
+			ProductId productId = new ProductId("069b1e52-6fd5-4ae1-9165-493b353db2e8");
+			Product product = Product.builder()
+				.id(productId)
+				.title("Apple iPhone 17 Pro")
+				.model("iPhone 17 Pro")
+				.build();
+			Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(product));
+			Assertions.assertDoesNotThrow(() -> productManagementUC.updateBasePrice(productId, 40000000L));
+		}
+	}
+
+	@Nested
+	class TestPublishRetireProduct {
+		Product product;
+
+		public TestPublishRetireProduct() {
+			ProductId productId = new ProductId("069b1e52-6fd5-4ae1-9165-493b353db2e8");
+			product = Product.builder()
+				.id(productId)
+				.category(new Category("Apple", ""))
+				.title("Apple iPhone 17 Pro")
+				.description("Đặc điểm nổi bật của iPhone 17 Pro\n" +
+					"• Khẳng định đẳng cấp với khung nhôm nguyên khối chắc chắn và diện mạo mới.")
+				.images(List.of("https://cdn.tgdd.vn/Products/Images/42/342676/Slider/iphone-17-pro638949088567223883.jpg"))
+				.specifications("{\"cpu\": \"A20 Bionic\", \"ram\": \"12GB\"}")
+				.status(ProductStatus.DRAFT)
+				.model("iPhone 17 Pro")
+				.build();
+		}
+
+		@Test
+		void testPublishProduct() {
+			ProductId productId = new ProductId("069b1e52-6fd5-4ae1-9165-493b353db2e8");
+			Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(product));
+			Assertions.assertDoesNotThrow(() -> productManagementUC.publishProduct(productId));
+		}
+
+		@Test
+		void testRetireProduct() {
+			ProductId productId = new ProductId("069b1e52-6fd5-4ae1-9165-493b353db2e8");
+			Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(product));
+			Assertions.assertDoesNotThrow(() -> productManagementUC.retireProduct(productId));
 		}
 	}
 

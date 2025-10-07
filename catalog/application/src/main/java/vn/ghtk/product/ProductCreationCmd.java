@@ -15,7 +15,8 @@ public record ProductCreationCmd(
 	String description,
 	List<String> images,
 	String specifications,
-	ProductStatus status
+	ProductStatus status,
+	Long basePrice
 ) {
 
 }

@@ -14,6 +14,7 @@ public class Product {
 	private List<String> images;
 	private String specifications;
 	private ProductStatus status;
+	private Long basePrice;
 
 	public String title() {
 		return this.title;
@@ -21,6 +22,11 @@ public class Product {
 
 	public ProductId id() {
 		return this.id;
+	}
+
+	public boolean isValidPublish() {
+		// để publish được cần category, title, desc != null, images tối thiểu 1 ảnh
+		return Objects.nonNull(category) && !title.isEmpty() && !description.isEmpty() && !images.isEmpty();
 	}
 
 	Product(ProductBuilder builder) {
@@ -34,6 +40,7 @@ public class Product {
 		this.images = builder.images;
 		this.specifications = builder.specifications;
 		this.status = builder.status;
+		this.basePrice = builder.basePrice;
 	}
 
 	public static class ProductBuilder {
@@ -47,6 +54,7 @@ public class Product {
 		private List<String> images;
 		private String specifications;
 		private ProductStatus status;
+		private Long basePrice;
 
 		public Product.ProductBuilder id(ProductId id) {
 			this.id = id;
@@ -104,6 +112,11 @@ public class Product {
 
 		public Product.ProductBuilder status(ProductStatus status) {
 			this.status = status;
+			return this;
+		}
+
+		public Product.ProductBuilder basePrice(Long basePrice) {
+			this.basePrice = basePrice;
 			return this;
 		}
 
