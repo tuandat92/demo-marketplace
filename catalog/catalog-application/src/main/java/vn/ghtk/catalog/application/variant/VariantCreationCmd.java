@@ -1,9 +1,9 @@
 package vn.ghtk.catalog.application.variant;
 
 
-import vn.ghtk.catalog.domain.Capacity;
-import vn.ghtk.catalog.domain.Color;
-import vn.ghtk.catalog.domain.ProductId;
+import vn.ghtk.catalog.domain.variant.Capacity;
+import vn.ghtk.catalog.domain.variant.Color;
+import vn.ghtk.catalog.domain.product.ProductId;
 
 public record VariantCreationCmd(
 	ProductId productId,

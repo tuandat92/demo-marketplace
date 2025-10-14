@@ -1,6 +1,10 @@
 package vn.ghtk.catalog.application.variant;
 
-import vn.ghtk.catalog.domain.*;
+import vn.ghtk.catalog.domain.common.ErrorMessage;
+import vn.ghtk.catalog.domain.variant.Variant;
+import vn.ghtk.catalog.domain.variant.VariantException;
+import vn.ghtk.catalog.domain.variant.VariantId;
+import vn.ghtk.catalog.domain.variant.VariantRepository;
 
 import java.util.UUID;
 

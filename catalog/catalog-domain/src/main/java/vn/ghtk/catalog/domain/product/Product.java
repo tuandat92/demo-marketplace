@@ -1,4 +1,6 @@
-package vn.ghtk.catalog.domain;
+package vn.ghtk.catalog.domain.product;
+
+import vn.ghtk.catalog.domain.common.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -65,7 +67,7 @@ public class Product {
 			if (Objects.isNull(model) || model.isEmpty()) {
 				throw new IllegalArgumentException("Tên model không được để trống");
 			}
-			this.model = model;
+			this.model = StringUtils.clean(model);
 			return this;
 		}
 
@@ -86,12 +88,12 @@ public class Product {
 		}
 
 		public ProductBuilder title(String title) {
-			this.title = title;
+			this.title = StringUtils.clean(title);
 			return this;
 		}
 
 		public ProductBuilder slug(String slug) {
-			this.slug = slug;
+			this.slug = StringUtils.clean(slug);
 			return this;
 		}
 

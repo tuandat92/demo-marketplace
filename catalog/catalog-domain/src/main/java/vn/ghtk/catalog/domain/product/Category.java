@@ -1,4 +1,4 @@
-package vn.ghtk.catalog.domain;
+package vn.ghtk.catalog.domain.product;
 
 public class Category {
 	private String name;

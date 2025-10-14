@@ -1,7 +1,8 @@
 package vn.ghtk.catalog.application.product;
 
 import lombok.RequiredArgsConstructor;
-import vn.ghtk.catalog.domain.*;
+import vn.ghtk.catalog.domain.common.ErrorMessage;
+import vn.ghtk.catalog.domain.product.*;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -10,6 +11,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductManagementUC implements ProductManagement {
 	private final ProductRepository productRepository;
+	private final BrandRepository brandRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Override
 	public void createProduct(ProductCreationCmd cmd) {
@@ -94,5 +97,23 @@ public class ProductManagementUC implements ProductManagement {
 		}
 
 		productRepository.updateStatus(id, ProductStatus.RETIRED);
+	}
+
+	@Override
+	public void createBrand(String brandValue) {
+		if (brandRepository.findByValue(brandValue).isPresent()) {
+			throw new BrandException(ErrorMessage.BRAND_EXISTS);
+		}
+
+		brandRepository.save(new Brand(brandValue));
+	}
+
+	@Override
+	public void createCategory(String categoryValue, String properties) {
+		if (categoryRepository.findByValue(categoryValue).isPresent()) {
+			throw new BrandException(ErrorMessage.CATEGORY_EXISTS);
+		}
+
+		categoryRepository.save(new Category(categoryValue, properties));
 	}
 }

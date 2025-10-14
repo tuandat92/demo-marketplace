@@ -1,4 +1,4 @@
-package vn.ghtk.catalog.domain;
+package vn.ghtk.catalog.domain.product;
 
 public class Brand {
 	private String name;

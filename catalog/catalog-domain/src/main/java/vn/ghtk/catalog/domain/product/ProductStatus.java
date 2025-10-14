@@ -1,4 +1,4 @@
-package vn.ghtk.catalog.domain;
+package vn.ghtk.catalog.domain.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

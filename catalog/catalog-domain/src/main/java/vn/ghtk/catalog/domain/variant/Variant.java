@@ -1,4 +1,6 @@
-package vn.ghtk.catalog.domain;
+package vn.ghtk.catalog.domain.variant;
+
+import vn.ghtk.catalog.domain.product.ProductId;
 
 public class Variant {
 	private VariantId id;

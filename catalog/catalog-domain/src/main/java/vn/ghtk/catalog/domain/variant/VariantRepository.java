@@ -1,4 +1,4 @@
-package vn.ghtk.catalog.domain;
+package vn.ghtk.catalog.domain.variant;
 
 import java.util.Optional;
 

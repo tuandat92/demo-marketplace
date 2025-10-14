@@ -1,8 +1,8 @@
 package vn.ghtk.catalog.application.product;
 
-import vn.ghtk.catalog.domain.Brand;
-import vn.ghtk.catalog.domain.Category;
-import vn.ghtk.catalog.domain.ProductStatus;
+import vn.ghtk.catalog.domain.product.Brand;
+import vn.ghtk.catalog.domain.product.Category;
+import vn.ghtk.catalog.domain.product.ProductStatus;
 
 import java.util.List;
 

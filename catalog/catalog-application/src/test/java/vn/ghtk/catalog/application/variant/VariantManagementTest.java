@@ -9,7 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import vn.ghtk.catalog.domain.*;
+import vn.ghtk.catalog.domain.product.ProductId;
+import vn.ghtk.catalog.domain.variant.*;
 
 import java.util.Optional;
 import java.util.UUID;
