@@ -1,5 +1,6 @@
 package vn.ghtk.catalog.domain.product;
 
+import vn.ghtk.catalog.domain.common.ErrorMessage;
 import vn.ghtk.catalog.domain.common.StringUtils;
 
 import java.util.List;
@@ -29,6 +30,22 @@ public class Product {
 	public boolean isValidPublish() {
 		// để publish được cần category, title, desc != null, images tối thiểu 1 ảnh
 		return Objects.nonNull(category) && !title.isEmpty() && !description.isEmpty() && !images.isEmpty();
+	}
+
+	public void updateBasePrice(Long basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public void publishProduct() {
+		if (!isValidPublish()) {
+			throw new ProductException(ErrorMessage.CANNOT_PUBLISH_PRODUCT);
+		}
+
+		this.status = ProductStatus.PUBLISHED;
+	}
+
+	public void retireProduct() {
+		this.status = ProductStatus.RETIRED;
 	}
 
 	Product(ProductBuilder builder) {

@@ -68,35 +68,23 @@ public class ProductManagementUC implements ProductManagement {
 
 	@Override
 	public void updateBasePrice(ProductId id, Long basePrice) {
-		if (productRepository.findById(id).isEmpty()) {
-			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
-		}
-
-		productRepository.updateBasePrice(id, basePrice);
+		Product product = findProduct(id);
+		product.updateBasePrice(basePrice);
+		productRepository.save(product);
 	}
 
 	@Override
 	public void publishProduct(ProductId id) {
-		Optional<Product> productOptional = productRepository.findById(id);
-		if (productOptional.isEmpty()) {
-			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
-		}
-
-		Product product = productOptional.get();
-		if (!product.isValidPublish()) {
-			throw new ProductException(ErrorMessage.CANNOT_PUBLISH_PRODUCT);
-		}
-
-		productRepository.updateStatus(id, ProductStatus.PUBLISHED);
+		Product product = findProduct(id);
+		product.publishProduct();
+		productRepository.save(product);
 	}
 
 	@Override
 	public void retireProduct(ProductId id) {
-		if (productRepository.findById(id).isEmpty()) {
-			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
-		}
-
-		productRepository.updateStatus(id, ProductStatus.RETIRED);
+		Product product = findProduct(id);
+		product.retireProduct();
+		productRepository.save(product);
 	}
 
 	@Override
@@ -115,5 +103,14 @@ public class ProductManagementUC implements ProductManagement {
 		}
 
 		categoryRepository.save(new Category(categoryValue, properties));
+	}
+
+	private Product findProduct(ProductId productId) {
+		Optional<Product> productOptional = productRepository.findById(productId);
+		if (productOptional.isEmpty()) {
+			throw new ProductException(ErrorMessage.PRODUCT_UPDATE_NOT_EXISTS);
+		}
+
+		return productOptional.get();
 	}
 }
